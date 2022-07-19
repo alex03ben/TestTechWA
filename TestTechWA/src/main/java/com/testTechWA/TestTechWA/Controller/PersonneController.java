@@ -1,5 +1,6 @@
 package com.testTechWA.TestTechWA.Controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,21 +13,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.testTechWA.TechWA.Repository.PersonneRepository;
 import com.testTechWA.TestTechWA.Model.Personne;
+import com.testTechWA.TestTechWA.Service.PersonneService;
 
 @Controller
 public class PersonneController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);  
+	private static final Logger logger = LoggerFactory.getLogger(PersonneController.class);  
 	
 	@Autowired
-	private PersonneRepository personneRepository;
+	private PersonneService personneService;
 	
-	@GetMapping(value = "/personnes")
-	public ResponseEntity<String> getAllPersonne() {
-        logger.info("Recupère toutes les personnes .....");
-        List<Personne> lRetour = personneRepository.findAll();
+	@GetMapping(value = "/personnesOrdered")
+	public ResponseEntity<Collection<Personne>> getAllPersonneOrderedWithAge() {
+        logger.info("Recupère toutes les personnes ...");
         
-        return new ResponseEntity<String>("Liste des personnes = "+lRetour, HttpStatus.OK);
+        Collection<Personne> allPersonneOrdered = personneService.getAllPersonneOrdered();
+        
+        return new ResponseEntity<Collection<Personne>>(allPersonneOrdered, HttpStatus.FOUND);
     }
 
 }
