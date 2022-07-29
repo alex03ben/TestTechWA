@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.testTechWA.TechWA.Repository.PersonneRepository;
 import com.testTechWA.TestTechWA.Model.Personne;
+import com.testTechWA.TestTechWA.Repository.PersonneRepository;
 import com.testTechWA.TestTechWA.Service.PersonneService;
 
+@Service
 public class PersonneServiceImpl implements PersonneService{
 
 	private static final Logger logger = LoggerFactory.getLogger(PersonneServiceImpl.class);
@@ -33,13 +35,12 @@ public class PersonneServiceImpl implements PersonneService{
 
 	@Override
 	public List<Personne> getAllPersonneOrdered() {
-		return personneRepository.findAll().stream().sorted((x1, x2) -> x1.getNom().compareTo(x2.getNom())).collect(Collectors.toList());
+		return personneRepository.findAllByOrderByNomAsc();
 	}
 
 	@Override
-	public void savePersonne(Personne personne) {
-		// TODO Auto-generated method stub
-		
+	public Personne savePersonne(Personne personne) {
+		return personneRepository.save(personne);
 	}
 	
 	

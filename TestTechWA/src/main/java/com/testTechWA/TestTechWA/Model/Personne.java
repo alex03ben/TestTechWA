@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PERSONNE")
@@ -29,6 +30,11 @@ public class Personne {
 	
 	@Column(name = "DATE_DE_NAISSANCE", unique=false, insertable=true, updatable=true, nullable=false)
 	private LocalDate dateNaissance;
+	
+	@Transient
+	private Integer age;
+	
+	
 
 	public Personne() {
 		super();
@@ -74,14 +80,23 @@ public class Personne {
 		this.dateNaissance = dateNaissance;
 	}
 
+	public Integer getAge() {
+		return this.age = LocalDate.now().getYear() - dateNaissance.getYear();
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
 	@Override
 	public String toString() {
-		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance + "]";
+		return "Personne [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance=" + dateNaissance
+				+ ", age=" + age + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateNaissance, id, nom, prenom);
+		return Objects.hash(age, dateNaissance, id, nom, prenom);
 	}
 
 	@Override
@@ -93,8 +108,9 @@ public class Personne {
 		if (getClass() != obj.getClass())
 			return false;
 		Personne other = (Personne) obj;
-		return Objects.equals(dateNaissance, other.dateNaissance) && Objects.equals(id, other.id)
-				&& Objects.equals(nom, other.nom) && Objects.equals(prenom, other.prenom);
+		return Objects.equals(age, other.age) && Objects.equals(dateNaissance, other.dateNaissance)
+				&& Objects.equals(id, other.id) && Objects.equals(nom, other.nom)
+				&& Objects.equals(prenom, other.prenom);
 	}
 	
 }

@@ -11,5 +11,5 @@ public interface PersonneService {
 
 	List<Personne> getAllPersonneOrdered();
 	
-	void savePersonne(Personne personne);
+	Personne savePersonne(Personne personne);
 }
